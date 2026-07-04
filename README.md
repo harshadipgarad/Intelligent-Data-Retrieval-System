@@ -4,15 +4,30 @@ An Intelligent Data Retrieval System that uses RAG and NL2SQL to answer question
 
 ## 🏗️ Project Architecture & Workflow
 
-The system is built on Retrieval-Augmented Generation (RAG) principles divided into two distinct pipelines:
+The system operates entirely on local infrastructure, utilizing a two-phase Retrieval-Augmented Generation (RAG) architecture:
+
 ```text
-[Step 1: Ingestion]  Your PDF ➔ Text Chunks ➔ Embedding Model (all-minilm) ➔ Chroma DB (Vector Store)
-                                                                                   │
-[Step 2: Retrieval]  User Query ➔ Match Semantics ➔ ───────────────────────────────┘
-                                       │
-                                (Top 3 Context Chunks)
-                                       │
-[Step 3: Generation] User Query + Context + Chat History ➔ Ollama (Llama3) ➔ Streamlit UI Response
+========================================================================================
+PHASE 1: INGESTION PIPELINE (vector_store.py)
+========================================================================================
+[Your PDF] ──> [Text Splitting] ──> [all-minilm Embeddings] ──> [Chroma DB (Local Store)]
+
+
+========================================================================================
+PHASE 2: RETRIEVAL & GENERATION PIPELINE (main.py)
+========================================================================================
+                                     ┌─────────────────────────┐
+                                     │  Chroma DB Vector Store │
+                                     └────────────┬────────────┘
+                                                  │
+                                            (Query Match)
+                                                  │
+                                                  ▼
+[User Query] ───────────────────────────> [Retrieve Top 3 Chunks]
+                                                  │
+                                                  ▼
+[User Query + Context + Chat History] ──> [Ollama (Llama3)] ──> [Streamlit UI Response]
+========================================================================================
 
 
  🚀 Features
