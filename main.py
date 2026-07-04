@@ -4,7 +4,7 @@ from langchain_ollama import OllamaLLM
 
 st.title("📄 DocGPT")
 
-model = OllamaLLM(model="llama3")
+model = OllamaLLM(model="llama3.2")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []

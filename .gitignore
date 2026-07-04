@@ -1,4 +1,12 @@
-venv/
+chrome_langchain_db/
+
 __pycache__/
-*.db
-.chroma/
+*.pyc
+.venv/
+venv/
+env/
+.env
+
+.streamlit/
+
+*.pdf

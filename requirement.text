@@ -1,4 +1,6 @@
-langchain
+streamlit
+pypdf
 langchain-ollama
 langchain-chroma
+langchain-community
 pandas
