@@ -4,6 +4,7 @@ An Intelligent Data Retrieval System that uses RAG and NL2SQL to answer question
 
 ## 🏗️ Project Architecture & Workflow
 
+```text
                  PDF Document
                       │
                       ▼
@@ -13,7 +14,7 @@ An Intelligent Data Retrieval System that uses RAG and NL2SQL to answer question
       Generate Embeddings (all-MiniLM)
                       │
                       ▼
-         Store in ChromaDB (Vector DB)
+       Store in ChromaDB (Vector DB)
                       │
 ────────────────────────────────────────────
                 User Query
@@ -26,6 +27,7 @@ An Intelligent Data Retrieval System that uses RAG and NL2SQL to answer question
                       │
                       ▼
           Answer in Streamlit UI
+```
 
 
 ✨ Features: PDF-Based Question Answering: Ask questions directly from uploaded PDFs. RAG Integration: Generates accurate responses using retrieved document context. Semantic Search: Retrieves relevant information using all-MiniLM embeddings and ChromaDB. 100% Local Processing: Ensures complete privacy by running entirely offline. Context-Aware Chat: Maintains conversation history for better responses. Interactive Streamlit UI: Provides a clean and user-friendly chat interface.
