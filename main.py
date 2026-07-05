@@ -4,7 +4,7 @@ from langchain_ollama import OllamaLLM
 
 st.title("📄 DocGPT")
 
-model = OllamaLLM(model="llama3.2")
+model = OllamaLLM(model="llama3.2", temperature=0.1)
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -14,43 +14,41 @@ pdf = st.file_uploader("Upload PDF", type="pdf")
 if pdf:
     reader = PdfReader(pdf)
     text = ""
-
     for page in reader.pages:
         text += page.extract_text() or ""
 
-    # Display old chats
     for msg in st.session_state.messages:
         st.chat_message(msg["role"]).write(msg["content"])
 
     question = st.chat_input("Ask a question")
 
     if question:
-        st.session_state.messages.append(
-            {"role": "user", "content": question}
-        )
-
         history = "\n".join(
-            [f'{m["role"]}: {m["content"]}'
-             for m in st.session_state.messages]
+            [f'{m["role"]}: {m["content"]}' for m in st.session_state.messages]
         )
 
-        prompt = f"""
-        Document:
-        {text}
+        st.chat_message("user").write(question)
+        st.session_state.messages.append({"role": "user", "content": question})
 
-        Conversation History:
-        {history}
+        prompt = f"""You are a helpful assistant. Answer the user's question accurately based ONLY on the provided Document context.
+If the information is available in the document, extract it properly. Do not state that the information is missing if it is present below.
 
-        Question:
-        {question}
+Document Content:
+\"\"\"
+{text}
+\"\"\"
 
-        Answer:
-        """
+Previous Conversation History:
+\"\"\"
+{history}
+\"\"\"
 
-        answer = model.invoke(prompt)
+Current Question to Answer: {question}
 
-        st.session_state.messages.append(
-            {"role": "assistant", "content": answer}
-        )
+Answer:"""
 
-        st.rerun()
+        with st.spinner("Thinking..."):
+            answer = model.invoke(prompt)
+
+        st.chat_message("assistant").write(answer)
+        st.session_state.messages.append({"role": "assistant", "content": answer})
