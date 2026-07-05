@@ -36,17 +36,8 @@ PDF-Based Question Answering: Ask questions directly from uploaded PDFs. RAG Int
 
 ## 🚀 How to Run
 
-### Install Dependencies
 ```bash
 pip install -r requirements.txt
-```
-
-### Initialize the Vector Store
-```bash
 python vector.py
-```
-
-### Run the Application
-```bash
 streamlit run main.py
 ```
